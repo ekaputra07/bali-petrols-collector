@@ -32,4 +32,15 @@
     <string name="preference_username_title">Username</string>
     <string name="preference_username_summary">Username is used to identify who enter the data</string>
 
+    <string-array name="bali_regencies">
+        <item>Badung</item>
+        <item>Bangli</item>
+        <item>Buleleng</item>
+        <item>Gianyar</item>
+        <item>Jembrana</item>
+        <item>Karangasem</item>
+        <item>Klungkung</item>
+        <item>Tabanan</item>
+    </string-array>
+
 </resources>

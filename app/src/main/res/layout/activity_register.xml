@@ -30,7 +30,22 @@
                 android:textSize="15dp"
                 android:id="@+id/textView"
                 android:textColor="#ff707070"
-                android:layout_marginTop="20dp" />
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/areaSpinner"
+                android:layout_gravity="center_horizontal"
+                android:spinnerMode="dialog"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:touchscreenBlocksFocus="false"
+                android:clickable="true"
+                android:background="#fff" />
 
             <LinearLayout
                 android:id="@+id/locationView"
@@ -40,7 +55,7 @@
                 android:layout_below="@+id/textView"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="30dp">
+                android:layout_marginTop="15dp">
 
                 <EditText
                     android:layout_width="fill_parent"

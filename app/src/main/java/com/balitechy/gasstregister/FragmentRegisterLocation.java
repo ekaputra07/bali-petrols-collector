@@ -7,14 +7,18 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -31,8 +35,8 @@ public class FragmentRegisterLocation extends Fragment implements OnMapReadyCall
     private Button btnRegister;
     private TextView txtSuccess;
     private EditText editLat, editLong;
+    private Spinner areaSpinner;
     private double latitude, longitude;
-    private GoogleMap map;
     private int locationUpdateCounter = 0;
 
     @Override
@@ -58,6 +62,7 @@ public class FragmentRegisterLocation extends Fragment implements OnMapReadyCall
                     ParseObject GasStation = new ParseObject("GasStation");
                     ParseGeoPoint point = new ParseGeoPoint(latitude, longitude);
 
+                    GasStation.put("area", areaSpinner.getSelectedItem());
                     GasStation.put("point", point);
                     GasStation.put("username", username);
                     GasStation.pinInBackground();
@@ -79,8 +84,33 @@ public class FragmentRegisterLocation extends Fragment implements OnMapReadyCall
 	}
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        // We need to initialize the Spinner here because Array adapter need a context input.
+        areaSpinner = (Spinner) getView().findViewById(R.id.areaSpinner);
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(
+                getActivity(),
+                R.array.bali_regencies,
+                android.R.layout.simple_spinner_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        areaSpinner.setAdapter(spinnerAdapter);
+
+//        areaSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                System.out.println(parent.getItemAtPosition(position));
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+    }
+
+    @Override
     public void onMapReady(final GoogleMap map) {
-        this.map = map;
 
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         map.setMyLocationEnabled(true);
