@@ -13,18 +13,18 @@ public class LocationItem {
     private ParseObject parseObject;
     private String syncStatus;
 
-    LocationItem(ParseObject parseObject, Context context){
+    LocationItem(ParseObject parseObject, Context context) {
 
         this.parseObject = parseObject;
         this.context = context;
 
         Date created = null;
-        try{
+        try {
             created = parseObject.getCreatedAt();
-        }finally {
-            if(created == null){
+        } finally {
+            if (created == null) {
                 syncStatus = "NOT SET";
-            }else{
+            } else {
                 syncStatus = created.toString();
             }
         }
@@ -39,18 +39,18 @@ public class LocationItem {
         return parseObject;
     }
 
-    public void syncParseObject(final OnLocationItemSyncListener syncListener){
+    public void syncParseObject(final OnLocationItemSyncListener syncListener) {
         syncStatus = context.getResources().getString(R.string.sync_start_text);
         syncListener.onSyncStart();
 
         parseObject.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                if(e == null){
+                if (e == null) {
                     syncStatus = context.getResources().getString(R.string.sync_success_text);
                     parseObject.unpinInBackground();
                     syncListener.onSyncDone(false);
-                }else{
+                } else {
                     syncStatus = context.getResources().getString(R.string.sync_failed_text);
                     syncListener.onSyncDone(true);
                 }
@@ -58,8 +58,9 @@ public class LocationItem {
         });
     }
 
-    public interface OnLocationItemSyncListener{
+    public interface OnLocationItemSyncListener {
         public void onSyncDone(Boolean isError);
+
         public void onSyncStart();
     }
 }

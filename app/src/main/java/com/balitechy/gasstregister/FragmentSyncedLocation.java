@@ -1,8 +1,5 @@
 package com.balitechy.gasstregister;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,10 +22,13 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class FragmentSyncedLocation extends Fragment {
-	private List<LocationItem> locationList = new ArrayList<LocationItem>();
-	private LocationListAdapter listAdapter;
+    private List<LocationItem> locationList = new ArrayList<LocationItem>();
+    private LocationListAdapter listAdapter;
     private ProgressDialog progress;
 
     @Override
@@ -47,7 +47,7 @@ public class FragmentSyncedLocation extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        switch(id){
+        switch (id) {
             case R.id.action_map_synced:
                 startMap();
                 break;
@@ -59,24 +59,24 @@ public class FragmentSyncedLocation extends Fragment {
     }
 
     @Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.location_list, container, false);
-		return view;
-	}
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.location_list, container, false);
+        return view;
+    }
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         progress = new ProgressDialog(getActivity());
         progress.setMessage(getResources().getString(R.string.loading_text));
         progress.setIndeterminate(false);
         progress.setCancelable(true);
 
-		listAdapter = new LocationListAdapter(getActivity(), R.layout.location, locationList);
+        listAdapter = new LocationListAdapter(getActivity(), R.layout.location, locationList);
         ListView listView = (ListView) getView().findViewById(R.id.list);
-		listView.setAdapter(listAdapter);
+        listView.setAdapter(listAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -89,74 +89,74 @@ public class FragmentSyncedLocation extends Fragment {
             }
         });
 
-		registerForContextMenu(listView);
-	}
+        registerForContextMenu(listView);
+    }
 
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {		
-		if(v.getId() == R.id.list){
-			getActivity().getMenuInflater().inflate(R.menu.synced_list_contextmenu, menu);
-		}
-	}
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenuInfo menuInfo) {
+        if (v.getId() == R.id.list) {
+            getActivity().getMenuInflater().inflate(R.menu.synced_list_contextmenu, menu);
+        }
+    }
 
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		switch(item.getItemId()){
-			case R.id.action_delete_live:
-				AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-				deleteLocation(info.position);
-				return true;
-			default:
-				return super.onContextItemSelected(item);
-		}
-	}
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_delete_live:
+                AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+                deleteLocation(info.position);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
 
-	public void loadLocations(){
-		progress.show();
-		locationList.clear();
-		
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("GasStation");
-		query.orderByDescending("createdAt");
-		query.findInBackground(new FindCallback<ParseObject>() {
-			public void done(List<ParseObject> locations, ParseException e) {
-                if(e == null) {
-                    for(ParseObject parseObject: locations){
+    public void loadLocations() {
+        progress.show();
+        locationList.clear();
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("GasStation");
+        query.orderByDescending("createdAt");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> locations, ParseException e) {
+                if (e == null) {
+                    for (ParseObject parseObject : locations) {
                         locationList.add(new LocationItem(parseObject, getActivity()));
                     }
                     listAdapter.notifyDataSetChanged();
                 }
                 progress.dismiss();
-			}
-		});
-	}
+            }
+        });
+    }
 
-    public void startMap(){
+    public void startMap() {
         Intent mapIntent = new Intent(getActivity(), MapActivity.class);
         mapIntent.putExtra("isLive", true);
         startActivity(mapIntent);
     }
 
-	@Override
-	public void setUserVisibleHint(boolean isVisibleToUser) {
-		super.setUserVisibleHint(isVisibleToUser);
-		if(isVisibleToUser && locationList.size() == 0){
-			loadLocations();
-		}
-	}
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && locationList.size() == 0) {
+            loadLocations();
+        }
+    }
 
-    private void deleteLocation(int index){
-		ParseObject location = ((LocationItem) listAdapter.getItem(index)).getParseObject();
-		
-		location.deleteInBackground(new DeleteCallback(){
+    private void deleteLocation(int index) {
+        ParseObject location = ((LocationItem) listAdapter.getItem(index)).getParseObject();
 
-			@Override
-			public void done(ParseException e) {
-                if(e == null) {
+        location.deleteInBackground(new DeleteCallback() {
+
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
                     loadLocations();
                 }
-			}
-			
-		});
-	}
+            }
+
+        });
+    }
 }

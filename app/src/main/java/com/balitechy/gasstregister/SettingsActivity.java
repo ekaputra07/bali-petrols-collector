@@ -13,8 +13,8 @@ public class SettingsActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getFragmentManager()
-        .beginTransaction()
-        .replace(R.id.preference_container, new SettingsFragment())
-        .commit();
+                .beginTransaction()
+                .replace(R.id.preference_container, new SettingsFragment())
+                .commit();
     }
 }

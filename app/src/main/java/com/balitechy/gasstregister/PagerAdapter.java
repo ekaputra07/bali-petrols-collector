@@ -15,7 +15,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int index) {
-        switch(index){
+        switch (index) {
             case 0:
                 return new FragmentRegisterLocation();
             case 1:
@@ -27,7 +27,6 @@ public class PagerAdapter extends FragmentPagerAdapter {
     }
 
 
-
     @Override
     public int getCount() {
         return 3;
@@ -35,7 +34,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        switch(position){
+        switch (position) {
             case 0:
                 return context.getResources().getString(R.string.collect_text);
             case 1:
