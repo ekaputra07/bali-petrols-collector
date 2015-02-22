@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Gasst Register</string>
+    <string name="collect_text">Collect</string>
+    <string name="unsynced_text">Unsynced</string>
+    <string name="synced_text">Synced</string>
+    <string name="intro_text">Save the Latitude and Longitude of your current location.</string>
+    <string name="waiting_gps">Waiting for GPS data...</string>
+    <string name="register_text">SAVE</string>
+    <string name="proccessing_text">SAVING...</string>
+    <string name="success_text">Saved!</string>
+    <string name="failed_text">Failed, try again!</string>
+    <string name="open_settings_text">Set now!</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="username_warning_title">Username required</string>
+    <string name="username_warning_message">Please set a unique username so we can track who enter the location info.</string>
+    <string name="sync_start_text">Syncing...</string>
+    <string name="sync_success_text">Synced</string>
+    <string name="sync_failed_text">Sync failed!</string>
+    <string name="loading_text">Loading...</string>
+
+    <string name="title_activity_map">Gas Station Map</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <string name="action_sync">Sync</string>
+    <string name="action_reload">Reload</string>
+    <string name="action_map">Map</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="preference_username_key">com.balitechy.gasstregister.PREF_USERNAME</string>
+    <string name="preference_username_title">Username</string>
+    <string name="preference_username_summary">Username is used to identify who enter the data</string>
+
+</resources>
