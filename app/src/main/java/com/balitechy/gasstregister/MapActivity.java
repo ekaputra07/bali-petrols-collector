@@ -66,7 +66,7 @@ public class MapActivity extends ActionBarActivity implements OnMapReadyCallback
                 if (e == null) {
                     for (ParseObject loc : locations) {
                         LatLng point = new LatLng(loc.getParseGeoPoint("point").getLatitude(), loc.getParseGeoPoint("point").getLongitude());
-                        map.addMarker(new MarkerOptions().position(point)).setTitle(loc.getObjectId());
+                        map.addMarker(new MarkerOptions().position(point)).setTitle(loc.getString("address"));
                     }
                 }
             }

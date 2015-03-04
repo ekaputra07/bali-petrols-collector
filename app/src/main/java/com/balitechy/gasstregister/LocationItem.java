@@ -19,19 +19,24 @@ public class LocationItem {
         this.context = context;
 
         Date created = null;
+        String address = null;
         try {
             created = parseObject.getCreatedAt();
+            address = parseObject.getString("address");
         } finally {
-            if (created == null) {
+            if (created == null && address == null) {
                 syncStatus = "NOT SET";
             } else {
-                syncStatus = created.toString();
+                if(address != null){
+                    syncStatus = address;
+                }else{
+                    syncStatus = created.toString();
+                }
             }
         }
     }
 
     public String getSyncStatus() {
-
         return syncStatus;
     }
 
